@@ -6,7 +6,9 @@
         <h2>{{ post.title }}</h2>
         <p>from user: {{ post.user_id }}</p>
         <p>{{ post.body }}</p>
-        <img :src="post.image" :alt="post.title" />
+        <router-link v-bind:to="`posts/${post.id}`">
+          <img :src="post.image" :alt="post.title" />
+        </router-link>
       </div>
     </div>
   </div>
