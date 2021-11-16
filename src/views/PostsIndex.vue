@@ -3,18 +3,33 @@
     <h1>{{ message }}</h1>
     <div>
       <div v-for="post in posts" :key="post.id">
-        <h2>{{ post.title }}</h2>
-        <p>from user: {{ post.user_id }}</p>
-        <p>{{ post.body }}</p>
-        <router-link v-bind:to="`posts/${post.id}`">
-          <img :src="post.image" :alt="post.title" />
-        </router-link>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">from user: {{ post.user_id }}</p>
+                <p class="card-text">{{ post.body }}</p>
+                <router-link v-bind:to="`posts/${post.id}`">
+                  <img :src="post.image" :alt="post.title" />
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+</style>
 
 <script>
 import axios from "axios";

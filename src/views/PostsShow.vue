@@ -5,7 +5,7 @@
       <p>from user: {{ post.title }}</p>
       <p>{{ post.body }}</p>
       <img :src="post.image" :alt="post.title" />
-      <router-link to="/posts">back to all</router-link>
+      <router-link to="/">back to all</router-link>
       |
       <router-link v-bind:to="`/posts/${post.id}/edit`">edit</router-link>
     </div>
