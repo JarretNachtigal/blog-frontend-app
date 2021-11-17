@@ -1,6 +1,9 @@
 <template>
   <div class="postsIndex">
     <h1>{{ message }}</h1>
+    <div>
+      <img v-if="status" :src="`https://http.cat/${status}`" alt="cat smile" />
+    </div>
     <form v-on:submit.prevent="createPost()">
       <ul>
         <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
@@ -52,6 +55,7 @@ export default {
       message: "Create a New Post",
       newPostParams: { title: "", body: "", image: "" },
       errors: [],
+      status: "",
     };
   },
   methods: {
@@ -60,9 +64,12 @@ export default {
         .post("/posts", this.newPostParams)
         .then(() => {
           console.log("post created");
-          this.$router.push("/posts");
+          this.$router.push("/");
         })
-        .catch((error) => console.log(error.response));
+        .catch((error) => {
+          console.log(error.response);
+          this.status = error.response.status;
+        });
     },
   },
 };

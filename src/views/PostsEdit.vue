@@ -41,13 +41,13 @@ export default {
     updatePost: function () {
       axios.patch(`/posts/${this.$route.params.id}`, this.currentPostParams).then((response) => {
         console.log(response.data);
-        this.$router.push("/posts");
+        this.$router.push("/");
       });
     },
     destroyPost: function () {
       axios.delete(`/posts/${this.$route.params.id}`).then((response) => {
         console.log("deleted", response.data);
-        this.$router.push("/posts");
+        this.$router.push("/");
       });
     },
   },
