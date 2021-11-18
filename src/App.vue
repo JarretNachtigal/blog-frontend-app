@@ -11,7 +11,7 @@
     </div> -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Blog</a>
+        <a class="navbar-brand" href="/">Home</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -26,12 +26,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item">
+            <li v-if="isLoggedIn()" class="nav-item">
               <a class="nav-link" href="/posts/new">Create Post</a>
             </li>
             <li v-if="!isLoggedIn()" class="nav-item">
@@ -66,7 +63,6 @@
               <a class="nav-link disabled">Disabled</a>
             </li> --->
           </ul>
-
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
             <button class="btn btn-outline-success" type="submit">Search</button>
@@ -74,6 +70,9 @@
         </div>
       </div>
     </nav>
+    <div v-on:click="flashMessageReset()" v-if="flashMessage" class="alert alert-success">
+      {{ flashMessage }}
+    </div>
     <router-view />
   </div>
 </template>
@@ -83,7 +82,9 @@
 <script>
 export default {
   data: function () {
-    return {};
+    return {
+      flashMessage: "",
+    };
   },
   methods: {
     isLoggedIn: function () {
@@ -92,6 +93,9 @@ export default {
       } else {
         return false;
       }
+    },
+    flashMessageReset: function () {
+      this.flashMessage = "";
     },
   },
 };
