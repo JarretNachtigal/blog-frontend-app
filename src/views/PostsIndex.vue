@@ -2,11 +2,16 @@
   <div class="postsIndex">
     <h1>{{ message }}</h1>
     <!-- old search bar, new one is in app.vue -->
-    <!-- Search by Title:
-    <input type="text" v-model="titleFilter" /> -->
+    Search by Title:
+    <input type="text" v-model="titleFilter" list="titles" />
+    <datalist id="titles">
+      <option :key="post.id" v-for="post in posts">{{ post.title }}</option>
+    </datalist>
+    <button v-on:click="sortAttribute = 'title'">sort by title</button>
+    <button v-on:click="sortAttribute = 'body'">sort by body</button>
     <div>
       <!-- can remove/change/add another 'title' -->
-      <div v-for="post in filterBy(posts, $parent.titleFilter, 'title')" :key="post.id">
+      <div v-for="post in orderBy(filterBy(posts, titleFilter, 'title'), sortAttribute)" :key="post.id">
         <div class="row">
           <div class="col-3"></div>
           <div class="col-6">
@@ -56,7 +61,8 @@ export default {
       message: "All Posts",
       posts: [],
       currentPost: {},
-      // titleFilter: "",
+      titleFilter: "",
+      sortAttribute: "",
       // highlighted: false,
     };
   },
