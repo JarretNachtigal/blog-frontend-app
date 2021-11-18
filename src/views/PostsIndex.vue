@@ -1,8 +1,12 @@
 <template>
   <div class="postsIndex">
     <h1>{{ message }}</h1>
+    <!-- old search bar, new one is in app.vue -->
+    <!-- Search by Title:
+    <input type="text" v-model="titleFilter" /> -->
     <div>
-      <div v-for="post in posts" :key="post.id">
+      <!-- can remove/change/add another 'title' -->
+      <div v-for="post in filterBy(posts, $parent.titleFilter, 'title')" :key="post.id">
         <div class="row">
           <div class="col-3"></div>
           <div class="col-6">
@@ -11,6 +15,8 @@
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">from user: {{ post.user_id }}</p>
                 <p class="card-text">{{ post.body }}</p>
+                <p class="card-text">Created: {{ relativeDate(post.created_at) }}</p>
+                <p class="card-text">Updated: {{ relativeDate(post.updated_at) }}</p>
                 <router-link v-bind:to="`posts/${post.id}`">
                   <img :src="post.image" :alt="post.title" />
                 </router-link>
@@ -40,13 +46,17 @@ h1 {
 
 <script>
 import axios from "axios";
+import moment from "moment";
+import Vue2Filters from "vue2-filters";
 
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function () {
     return {
       message: "All Posts",
       posts: [],
       currentPost: {},
+      // titleFilter: "",
       // highlighted: false,
     };
   },
@@ -59,6 +69,9 @@ export default {
         this.posts = response.data;
         console.log(response);
       });
+    },
+    relativeDate: function (date) {
+      return moment(date).fromNow();
     },
   },
 };
