@@ -34,13 +34,13 @@
             <li class="nav-item">
               <a class="nav-link" href="/posts/new">Create Post</a>
             </li>
-            <li class="nav-item">
+            <li v-if="!isLoggedIn()" class="nav-item">
               <a class="nav-link" href="/login">Login</a>
             </li>
-            <li class="nav-item">
+            <li v-if="isLoggedIn()" class="nav-item">
               <a class="nav-link" href="/logout">Log out</a>
             </li>
-            <li class="nav-item">
+            <li v-if="!isLoggedIn()" class="nav-item">
               <a class="nav-link" href="/signup">Sign up</a>
             </li>
             <!-- <li class="nav-item dropdown">
@@ -79,3 +79,20 @@
 </template>
 
 <style></style>
+
+<script>
+export default {
+  data: function () {
+    return {};
+  },
+  methods: {
+    isLoggedIn: function () {
+      if (localStorage.getItem("jwt")) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+};
+</script>
